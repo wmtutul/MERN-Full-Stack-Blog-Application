@@ -2,13 +2,15 @@ import express  from "express";
 import connectDB from "./database_conection/db.js";
 import dotenv from "dotenv";
 import userRoute from "./src/routes/user.route.js";
+import bodyParser from "body-parser";
+import cors from "cors";
 
-
-dotenv.config();
 
 const app = express();
 
-
+app.use(bodyParser.json()); 
+app.use(cors());
+dotenv.config();
 
  
 //API calling 
@@ -23,3 +25,4 @@ app.listen(PORT, ()=>{
         connectDB();
         console.log(`Server is running on port: http://localhost:${PORT}`)
 })
+
