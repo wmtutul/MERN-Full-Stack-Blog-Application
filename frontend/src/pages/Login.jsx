@@ -7,8 +7,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
-// import { useDispatch } from "react-redux";
-// import { setUser } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/authSlice";
 import auth from "../assets/auth.jpg"
 
 
@@ -16,6 +16,7 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -33,13 +34,15 @@ const Login = () => {
     e.preventDefault();
 
     try {
+
       const response = await axios.post(`http://localhost:8000/api/v1/user/login`, input);
+
       if (response.data.success) {
         navigate('/')
+        dispatch(setUser(response.data.user))
         toast.success(response.data.message)
-      } else {
-        toast.error(response.data.message)
       }
+      
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message)

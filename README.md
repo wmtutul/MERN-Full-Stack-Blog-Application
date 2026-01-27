@@ -5,7 +5,8 @@ Frontend
 1. react-router-dom
 2. shadcn ui
 3. lucide-react (for icon)
+4. Redux toolkit
 
 
 
-Time: 2: 34 : 00 / 3:33:22  Running---
+Time: 3:9 : 00 / 3:33:22  Running---

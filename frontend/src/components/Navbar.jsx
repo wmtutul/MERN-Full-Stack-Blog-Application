@@ -6,11 +6,13 @@ import { Button } from './ui/button'
 import { Search } from 'lucide-react'
 import { FaMoon } from 'react-icons/fa'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
 
   // const user = false
-  const user = true
+  // const user = true
+  const {user} = useSelector(store=>store.auth)
 
   return (
     <div className='py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50'>
@@ -47,7 +49,7 @@ const Navbar = () => {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <Link to={"/login"}><Button>Login</Button></Link>
+                <Link to={"/login"}><Button>Logout</Button></Link>
               </div> : <div className='ml-7 md:flex gap-2'>
                 <Link to={"/login"}><Button>Login</Button></Link>
                 <Link className='hidden md:block' to={"/signup"}><Button>Signup</Button></Link>
