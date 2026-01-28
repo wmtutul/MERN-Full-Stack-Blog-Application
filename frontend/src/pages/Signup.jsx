@@ -1,19 +1,23 @@
 import { Input } from "../components/ui/input"
-import { Button} from "../components/ui/button"
+import { Button } from "../components/ui/button"
 import auth from "../assets/auth.jpg"
-import {Card, CardContent, CardHeader, CardTitle} from '../components/ui/card'
-import {Label} from '../components/ui/label'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { Label } from '../components/ui/label'
 import { Link, useNavigate } from "react-router-dom"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import axios from "axios"
+import { setLoading } from "../redux/authSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 
 const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const { loading } = useSelector(store => store.auth)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -34,6 +38,7 @@ const Signup = () => {
         // console.log(user)
 
         try {
+            dispatch(setLoading(true));
             const response = await axios.post(`http://localhost:8000/api/v1/user/register`, user);
             if (response.data.success) {
                 navigate('/login')
@@ -44,6 +49,9 @@ const Signup = () => {
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message)
+
+        } finally{
+            dispatch(setLoading(false));
         }
     }
 
@@ -52,7 +60,7 @@ const Signup = () => {
     return (
         <div className="flex  h-screen md:pt-14 md:h-[760px] ">
             <div className='hidden md:block'>
-                <img src={auth} alt="" className='h-[700px]'  />
+                <img src={auth} alt="" className='h-[700px]' />
             </div>
             <div className='flex justify-center items-center flex-1 px-4 md:px-0'>
                 <Card className="w-full max-w-md p-6 shadow-lg rounded-2xl dark:bg-gray-800 dark:border-gray-600">
@@ -116,7 +124,16 @@ const Signup = () => {
                                 </button>
                             </div>
 
-                            <Button type="submit" className="w-full">Sign Up</Button>
+                            <Button type="submit" className="w-full">
+                                {
+                                    loading ? (
+                                        <>
+                                            <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                                            please wait...
+                                        </>
+                                    ) : ("Sign Up")
+                                }
+                            </Button>
                             <p className='text-center text-gray-600 dark:text-gray-300'>Already have an account? <Link to={'/login'}><span className='underline cursor-pointer hover:text-gray-800 dark:hover:text-gray-100'>Sign in</span></Link></p>
                         </form>
                     </CardContent>
