@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/logo.png'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { Search } from 'lucide-react'
-import { FaMoon, FaSun } from 'react-icons/fa'
+import { ChartColumnBig, Search, LogOutIcon,  UserIcon} from 'lucide-react'
+import { FaMoon, FaRegEdit, FaSun } from 'react-icons/fa'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleTheme } from '../redux/themeSlice'
@@ -12,19 +12,31 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { setUser } from '../redux/authSlice'
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
+
+import { LiaCommentSolid} from "react-icons/lia";
+
+
 const Navbar = () => {
 
   // const user = false
   // const user = true
-  const {user} = useSelector(store=>store.auth);
-  const {theme} = useSelector(store => store.theme)
+  const { user } = useSelector(store => store.auth);
+  const { theme } = useSelector(store => store.theme)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logoutHandler = async (e) => {
     try {
       const res = await axios.get('http://localhost:8000/api/v1/user/logout');
-      if(res.data.success){
+      if (res.data.success) {
         navigate('/')
         dispatch(setUser(null))
         toast.success(res.data.message)
@@ -63,23 +75,56 @@ const Navbar = () => {
             <Link to={'/about'}><li>About</li></Link>
           </ul>
           <div className='flex'>
-            <Button onClick={()=>dispatch(toggleTheme())} className='cursor-pointer'>
+            <Button onClick={() => dispatch(toggleTheme())} className='cursor-pointer'>
               {
-                theme === 'light' ? <FaMoon /> : <FaSun/>
+                theme === 'light' ? <FaMoon /> : <FaSun />
               }
             </Button>
+
             {
-              user ? <div className='ml-7 flex gap-3 items-center'>
-                <Avatar className='cursor-pointer'>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+              user ? <div className='ml-7 flex gap-3 items-center '>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className='cursor-pointer'>
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+
+                    <DropdownMenuItem>
+                      <UserIcon />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ChartColumnBig />
+                      Your Blogs
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <LiaCommentSolid />
+                      Comments
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <FaRegEdit />
+                      Write Blog
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
+                      <LogOutIcon />
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
                 <Button onClick={logoutHandler} className='cursor-pointer'>Logout</Button>
               </div> : <div className='ml-7 md:flex gap-2'>
                 <Link to={"/login"}><Button>Login</Button></Link>
                 <Link className='hidden md:block' to={"/signup"}><Button>Signup</Button></Link>
               </div>
             }
+
           </div>
         </nav>
       </div>

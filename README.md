@@ -7,6 +7,6 @@ Frontend
 3. lucide-react (for icon)
 4. Redux toolkit
 
+gitLink: https://github.com/rohitsingh93300/MERN-Blog/tree/main
 
-
-Time: 3:25 : 00 / 3:33:22  Running---
+Time: 26:25 : 00 / 2:49:07 2nd video  Running---
