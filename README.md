@@ -9,4 +9,4 @@ Frontend
 
 gitLink: https://github.com/rohitsingh93300/MERN-Blog/tree/main
 
-Time: 26:25 : 00 / 2:49:07 2nd video  Running---
+Time: 50:00 : 00 / 2:49:07 2nd video  Running---
