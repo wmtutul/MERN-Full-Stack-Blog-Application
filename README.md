@@ -9,4 +9,11 @@ Frontend
 
 gitLink: https://github.com/rohitsingh93300/MERN-Blog/tree/main
 
-Time: 50:00 : 00 / 2:49:07 2nd video  Running---
+
+Backend
+========
+npm i cloudinary
+npm i datauri
+npm i multer
+
+Time: 1:47 : 00 / 2:49:07 2nd video  Running---

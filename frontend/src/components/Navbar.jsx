@@ -94,19 +94,19 @@ const Navbar = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/dashboard/profile')}>
                       <UserIcon />
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/dashboard/your-blog')}>
                       <ChartColumnBig />
                       Your Blogs
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/dashboard/comments')}>
                       <LiaCommentSolid />
                       Comments
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/dashboard/write-blog')}>
                       <FaRegEdit />
                       Write Blog
                     </DropdownMenuItem>

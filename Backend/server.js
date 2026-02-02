@@ -4,11 +4,13 @@ import dotenv from "dotenv";
 import userRoute from "./src/routes/user.route.js";
 import bodyParser from "body-parser";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 
 const app = express();
 
 app.use(bodyParser.json()); 
+app.use(cookieParser());
 app.use(cors());
 dotenv.config();
 
