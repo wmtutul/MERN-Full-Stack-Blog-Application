@@ -7,8 +7,8 @@ import cloudinary from "../../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
-        const { firstName, lastName, email,  password } = req.body;
-        if (!firstName || !lastName || !email ||  !password) {
+        const { firstName, lastName, email, password } = req.body;
+        if (!firstName || !lastName || !email || !password) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -63,9 +63,9 @@ export const register = async (req, res) => {
 
 
 
-export const login = async(req, res) => {
+export const login = async (req, res) => {
     try {
-        const {email,  password } = req.body;
+        const { email, password } = req.body;
         if (!email && !password) {
             return res.status(400).json({
                 success: false,
@@ -73,45 +73,65 @@ export const login = async(req, res) => {
             })
         }
 
-        let user = await User.findOne({email});
-        if(!user){
+        let user = await User.findOne({ email });
+        if (!user) {
             return res.status(400).json({
-                success:false,
-                message:"Incorrect email or password"
+                success: false,
+                message: "Incorrect email or password"
             })
         }
-       
+
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "Invalid Credentials" 
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Credentials"
             })
         }
-        
-        const token = await jwt.sign({userId:user._id}, process.env.SECRET_KEY, { expiresIn: '1d' })
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: "strict" }).json({
-            success:true,
-            message:`Welcome back ${user.firstName}`,
-            user
-        })
+
+        const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1d' })
+
+        return res
+            .status(200)
+            .cookie("token", token, {
+                httpOnly: true,          // correct key
+                secure: false,           // must be false on localhost
+                sameSite: "lax",         // allows cross-port localhost
+                maxAge: 24 * 60 * 60 * 1000
+            })
+            .json({
+                success: true,
+                message: `Welcome back ${user.firstName}`,
+                user
+            });
+
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Failed to Login",           
+            message: "Failed to Login",
         })
     }
-  
+
 }
 
 
 export const logout = async (_, res) => {
     try {
-        return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-            message: "Logout successfully.",
-            success: true
-        })
+        return res
+            .status(200)
+            .cookie("token", "", {
+                httpOnly: true,
+                maxAge: 0,
+                sameSite: "lax",
+                secure: false
+            })
+            .json({
+                message: "Logout successfully.",
+                success: true
+            });
+
     } catch (error) {
         console.log(error);
     }
@@ -119,10 +139,10 @@ export const logout = async (_, res) => {
 
 
 
-export const updateProfile = async(req, res) => {
+export const updateProfile = async (req, res) => {
     try {
-        const userId= req.id
-        const {firstName, lastName, occupation, bio, instagram, facebook, linkedin, github} = req.body;
+        const userId = req.id
+        const { firstName, lastName, occupation, bio, instagram, facebook, linkedin, github } = req.body;
         const file = req.file;
 
         const fileUri = getDataUri(file)
@@ -130,32 +150,32 @@ export const updateProfile = async(req, res) => {
         // console.log(cloudResponse);
 
         const user = await User.findById(userId).select("-password")
-        
-        if(!user){
+
+        if (!user) {
             return res.status(404).json({
-                message:"User not found",
-                success:false
+                message: "User not found",
+                success: false
             })
         }
 
         // updating data
-        if(firstName) user.firstName = firstName
-        if(lastName) user.lastName = lastName
-        if(occupation) user.occupation = occupation
-        if(instagram) user.instagram = instagram
-        if(facebook) user.facebook = facebook
-        if(linkedin) user.linkedin = linkedin
-        if(github) user.github = github
-        if(bio) user.bio = bio
-        if(file) user.photoUrl = cloudResponse.secure_url
+        if (firstName) user.firstName = firstName
+        if (lastName) user.lastName = lastName
+        if (occupation) user.occupation = occupation
+        if (instagram) user.instagram = instagram
+        if (facebook) user.facebook = facebook
+        if (linkedin) user.linkedin = linkedin
+        if (github) user.github = github
+        if (bio) user.bio = bio
+        if (file) user.photoUrl = cloudResponse.secure_url
 
         await user.save()
         return res.status(200).json({
-            message:"profile updated successfully",
-            success:true,
+            message: "profile updated successfully",
+            success: true,
             user
         })
-        
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({

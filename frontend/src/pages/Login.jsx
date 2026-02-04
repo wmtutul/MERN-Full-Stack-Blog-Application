@@ -15,7 +15,7 @@ import auth from "../assets/auth.jpg"
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
-  const {loading} = useSelector(store=>store.auth)
+  const { loading } = useSelector(store => store.auth)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
@@ -31,29 +31,30 @@ const Login = () => {
     }));
   };
 
+ 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-
       dispatch(setLoading(true));
-      const response = await axios.post(`http://localhost:8000/api/v1/user/login`, input);
+      const response = await axios.post(`http://localhost:8000/api/v1/user/login`, input, {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
-        navigate('/')
-        dispatch(setUser(response.data.user))
-        toast.success(response.data.message)
+        navigate('/');
+        dispatch(setUser(response.data.user));
+        toast.success(response.data.message);
       }
-      
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message)
-
-    } finally{
+      toast.error(error.response?.data?.message || "Login failed");
+    } finally {
       dispatch(setLoading(false));
     }
+  };
 
-  }
 
 
   return (
@@ -102,7 +103,7 @@ const Login = () => {
                 {
                   loading ? (
                     <>
-                      <Loader2 className="mr-2 w-4 h-4 animate-spin"/>
+                      <Loader2 className="mr-2 w-4 h-4 animate-spin" />
                       please wait...
                     </>
                   ) : ("Login")

@@ -22,6 +22,7 @@ import {
 } from "../components/ui/dropdown-menu"
 
 import { LiaCommentSolid} from "react-icons/lia";
+import userLogo from "../assets/user.jpg";
 
 
 const Navbar = () => {
@@ -87,7 +88,7 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Avatar className='cursor-pointer'>
-                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarImage src={user.photoUrl || userLogo} />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
@@ -120,8 +121,8 @@ const Navbar = () => {
 
                 <Button onClick={logoutHandler} className='cursor-pointer'>Logout</Button>
               </div> : <div className='ml-7 md:flex gap-2'>
-                <Link to={"/login"}><Button>Login</Button></Link>
-                <Link className='hidden md:block' to={"/signup"}><Button>Signup</Button></Link>
+                <Link to={"/login"} ><Button className='cursor-pointer'>Login</Button></Link>
+                <Link className='hidden md:block' to={"/signup"}>< Button className='cursor-pointer'>Signup</Button></Link>
               </div>
             }
 
@@ -133,3 +134,4 @@ const Navbar = () => {
 }
 
 export default Navbar
+
