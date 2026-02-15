@@ -1,6 +1,6 @@
 import React from 'react'
 import Home from './pages/Home'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Blogs from './pages/Blogs'
 import About from './pages/About'
 import Login from './pages/Login'
@@ -11,28 +11,29 @@ import Profile from './pages/Profile'
 import YourBlog from './pages/YourBlog'
 import Comments from './pages/Comments'
 import CreateBlog from './pages/CreateBlog'
+import UpdateBlog from './pages/UpdateBlog'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <> <Navbar/> <Home/> </> 
+    element: <> <Navbar /> <Home /> </>
   },
   {
     path: "/blogs",
-    element: <> <Navbar/>  <Blogs/> </>
+    element: <> <Navbar />  <Blogs /> </>
   },
   {
     path: "/about",
-    element: <> <Navbar/>  <About/> </>
+    element: <> <Navbar />  <About /> </>
   },
   {
     path: "/login",
-    element: <> <Navbar/>  <Login/> </>
+    element: <> <Navbar />  <Login /> </>
   },
   {
     path: "/Signup",
-    element: <> <Navbar/>  <Signup/> </>
+    element: <> <Navbar />  <Signup /> </>
   },
   {
     path: "/dashboard",
@@ -53,15 +54,21 @@ const router = createBrowserRouter([
       {
         path: "write-blog",
         element: <CreateBlog/>
+      },
+      {
+        path: "write-blog/:blogId",
+        element: <UpdateBlog/>
       }
     ]
   },
+
 ])
+
 
 const App = () => {
   return (
     <>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
   )
 }
