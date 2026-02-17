@@ -1,6 +1,6 @@
 import express from "express";
 import { isAuthenticated } from "../middleware/isAuthenticated.js";
-import { createBlog, deleteBlog, getOwnBlogs, updateBlog } from "../controllers/blog.controller.js";
+import { createBlog, deleteBlog, dislikeBlog, getMyTotalBlogLikes, getOwnBlogs, getPublishedBlog, likeBlog, togglePublishBlog, updateBlog } from "../controllers/blog.controller.js";
 import { singleUpload } from "../middleware/multer.js";
 
 const router = express.Router()
@@ -9,6 +9,11 @@ router.post('/', isAuthenticated, createBlog);
 router.put('/:blogId', isAuthenticated, singleUpload, updateBlog);
 router.route("/get-own-blogs").get(isAuthenticated, getOwnBlogs);
 router.route("/delete/:id").delete(isAuthenticated, deleteBlog);
+router.get("/:id/like", isAuthenticated, likeBlog);
+router.get("/:id/dislike", isAuthenticated, dislikeBlog);
+router.get('/my-blogs/likes', isAuthenticated, getMyTotalBlogLikes);
+router.route("/get-published-blogs").get(getPublishedBlog);
+router.route("/:blogId").patch(togglePublishBlog);
 
 
 export default router;

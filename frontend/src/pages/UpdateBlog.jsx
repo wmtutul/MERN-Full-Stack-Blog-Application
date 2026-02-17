@@ -24,6 +24,7 @@ const UpdateBlog = () => {
   const { blog, loading } = useSelector(store => store.blog)
   const selectBlog = blog.find(blog => blog._id === id)
   const [content, setContent] = useState(selectBlog.description)
+  const [publish, setPublish] = useState(false)
   console.log(params);
 
   const [blogData, setBlogData] = useState({
@@ -89,6 +90,48 @@ const UpdateBlog = () => {
   }
 
 
+  const togglePublishUnpublish = async (action) => {
+    console.log("action", action);
+
+    try {
+      const res = await axios.patch(`http://localhost:8000/api/v1/blog/${id}`, {
+        params: {
+          action
+        },
+        withCredentials: true
+      })
+      if (res.data.success) {
+        setPublish(!publish)
+        toast.success(res.data.message)
+        navigate(`/dashboard/your-blog`)
+      } else {
+        toast.error("Failed to update")
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  const deleteBlog = async () => {
+    try {
+      const res = await axios.delete(`http://localhost:8000/api/v1/blog/delete/${id}`, { withCredentials: true })
+      if (res.data.success) {
+        const updatedBlogData = blog.filter((blogItem) => blogItem?._id !== id);
+        dispatch(setBlog(updatedBlogData))
+        toast.success(res.data.message)
+        navigate('/dashboard/your-blog')
+      }
+      console.log(res.data.message);
+
+    } catch (error) {
+      console.log(error);
+      toast.error("something went error")
+    }
+
+  }
+
+
   return (
     <div className='pb-10 px-3 pt-20 md:ml-[320px]'>
       <div className='max-w-6xl mx-auto mt-8'>
@@ -96,8 +139,12 @@ const UpdateBlog = () => {
           <h1 className=' text-4xl font-bold '>Basic Blog Information</h1>
           <p className=''>Make changes to your blogs here. Click publish when you're done.</p>
           <div className="space-x-2">
-            <Button>Publish </Button>
-            <Button variant='destructive'>Remove Course</Button>
+            <Button onClick={() => togglePublishUnpublish(selectBlog.isPublished ? "false" : "true")}>
+              {
+                selectBlog?.isPublished ? "UnPublish" : "Publish"
+              }
+            </Button>
+            <Button onClick={deleteBlog} variant='destructive'>Remove Course</Button>
           </div>
           <div className='pt-10'>
             <Label className='mb-1'>Title</Label>
@@ -173,7 +220,7 @@ const UpdateBlog = () => {
             <Button variant="outline" onClick={() => navigate(-1)} className="cursor-pointer">Back</Button>
             <Button onClick={updateBlogHandler} className="cursor-pointer">
               {
-                loading ? <><Loader2 className='mr-2 w-4 animate-spin'/>Please wait.. </> : "Save"
+                loading ? <><Loader2 className='mr-2 w-4 animate-spin' />Please wait.. </> : "Save"
               }
             </Button>
           </div>
@@ -185,3 +232,6 @@ const UpdateBlog = () => {
 }
 
 export default UpdateBlog
+
+
+
