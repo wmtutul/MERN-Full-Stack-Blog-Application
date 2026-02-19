@@ -13,20 +13,21 @@ import Comments from './pages/Comments'
 import CreateBlog from './pages/CreateBlog'
 import UpdateBlog from './pages/UpdateBlog'
 import BlogView from './pages/BlogView '
+import Footer from './components/Footer'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <> <Navbar /> <Home /> </>
+    element: <> <Navbar /> <Home /> <Footer/> </>
   },
   {
     path: "/blogs",
-    element: <> <Navbar />  <Blogs /> </>
+    element: <> <Navbar />  <Blogs /> <Footer/> </>
   },
   {
     path: "/about",
-    element: <> <Navbar />  <About /> </>
+    element: <> <Navbar />  <About /> <Footer/> </>
   },
   {
     path: "/login",
