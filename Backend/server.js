@@ -3,6 +3,7 @@ import connectDB from "./database_conection/db.js";
 import dotenv from "dotenv";
 import userRoute from "./src/routes/user.route.js";
 import blogRoute from "./src/routes/blog.route.js";
+import commentRoute from "./src/routes/comment.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/blog", blogRoute);
+app.use("/api/v1/comment", commentRoute);
 
 
 

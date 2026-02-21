@@ -19,6 +19,7 @@ import axios from 'axios'
 import { FaHeart, FaRegHeart } from 'react-icons/fa6'
 // import { setBlog } from '@/redux/blogSlice'
 import { toast } from 'sonner'
+import CommentBox from '@/components/CommentBox'
 
 const BlogView = () => {
     const params = useParams()
@@ -176,8 +177,9 @@ const BlogView = () => {
                             </Button>
                         </div>
                     </div>
-
                 </div>
+
+                <CommentBox  selectedBlog={selectedBlog} />
 
             </div>
         </div>
@@ -185,4 +187,5 @@ const BlogView = () => {
 }
 
 export default BlogView
+
 
