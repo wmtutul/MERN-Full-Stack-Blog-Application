@@ -48,8 +48,8 @@ const Comments = () => {
             <TableBody>
               {allComments?.map((comment, index) => (
                 <TableRow key={index}>
-                  <TableCell className="font-medium">
-                    {comment.postId.title}
+                  <TableCell className="font-medium ">
+                    <h1 className='w-[60px] truncate md:w-full'>{comment.postId.title}</h1>
                   </TableCell>
                   <TableCell>{comment.content}</TableCell>
                   <TableCell className="">{comment.userId.firstName}</TableCell>

@@ -30,3 +30,4 @@ const BlogCardList = ({ blog }) => {
 
 export default BlogCardList
 
+

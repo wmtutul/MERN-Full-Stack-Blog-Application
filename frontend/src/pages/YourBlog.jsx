@@ -18,51 +18,6 @@ import { toast } from 'sonner'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-// const invoices = [
-//   {
-//     invoice: "INV001",
-//     paymentStatus: "Paid",
-//     totalAmount: "$250.00",
-//     paymentMethod: "Credit Card",
-//   },
-//   {
-//     invoice: "INV002",
-//     paymentStatus: "Pending",
-//     totalAmount: "$150.00",
-//     paymentMethod: "PayPal",
-//   },
-//   {
-//     invoice: "INV003",
-//     paymentStatus: "Unpaid",
-//     totalAmount: "$350.00",
-//     paymentMethod: "Bank Transfer",
-//   },
-//   {
-//     invoice: "INV004",
-//     paymentStatus: "Paid",
-//     totalAmount: "$450.00",
-//     paymentMethod: "Credit Card",
-//   },
-//   {
-//     invoice: "INV005",
-//     paymentStatus: "Paid",
-//     totalAmount: "$550.00",
-//     paymentMethod: "PayPal",
-//   },
-//   {
-//     invoice: "INV006",
-//     paymentStatus: "Pending",
-//     totalAmount: "$200.00",
-//     paymentMethod: "Bank Transfer",
-//   },
-//   {
-//     invoice: "INV007",
-//     paymentStatus: "Unpaid",
-//     totalAmount: "$300.00",
-//     paymentMethod: "Credit Card",
-//   },
-// ]
-
 
 const YourBlog = () => {
 
@@ -121,7 +76,7 @@ const YourBlog = () => {
         <Card className="w-full p-5 space-y-2 dark:bg-gray-800">
           <Table>
             <TableCaption>A list of your recent blogs.</TableCaption>
-            <TableHeader>
+            <TableHeader className="overflow-x-auto">
               <TableRow>
                 <TableHead>Title</TableHead>
                 <TableHead>Category</TableHead>
@@ -129,13 +84,13 @@ const YourBlog = () => {
                 <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="overflow-x-auto">
               {
                 blog.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell className="flex gap-4 items-center">
                       <img src={item.thumbnail} className='w-20 rounded-md hidden md:block' alt="" />
-                      <h1 onClick={()=>navigate(`/blogs/${item._id}`)} className='hover:underline cursor-pointer'>{item.title}</h1>
+                      <h1 onClick={()=>navigate(`/blogs/${item._id}`)} className='hover:underline cursor-pointer w-[60px] md:w-full truncate'>{item.title}</h1>
                     </TableCell>
                     <TableCell>{item.category}</TableCell>
                     <TableCell>{formatDate(index)}</TableCell>

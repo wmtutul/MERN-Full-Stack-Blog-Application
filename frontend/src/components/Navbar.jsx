@@ -22,7 +22,10 @@ import {
 } from "../components/ui/dropdown-menu"
 
 import { LiaCommentSolid } from "react-icons/lia";
+import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
+
 import userLogo from "../assets/user.jpg";
+import ResponsiveMenu from './ResponsiveMenu'
 
 
 const Navbar = () => {
@@ -32,6 +35,7 @@ const Navbar = () => {
   const { user } = useSelector(store => store.auth);
   const { theme } = useSelector(store => store.theme)
   const [searchTerm, setSearchTerm] = useState('');
+  const [openNav, setOpenNav] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,6 +61,11 @@ const Navbar = () => {
     }
   };
 
+  const toggleNav = () => {
+    setOpenNav(!openNav)
+  }
+
+
   return (
     <div className='py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50'>
       <div className='max-w-7xl mx-auto flex justify-between items-center px-4 md:px-0'>
@@ -73,7 +82,7 @@ const Navbar = () => {
               type="text"
               placeholder="Search..."
               value={searchTerm}
-              onChange = {(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="border border-gray-700 dark:bg-gray-900 bg-gray-300 w-[300px] hidden md:block"
             />
             <Button onClick={handleSearch} className="absolute top-0 right-0 cursor-pointer"><Search /></Button>
@@ -130,15 +139,21 @@ const Navbar = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <Button onClick={logoutHandler} className='cursor-pointer'>Logout</Button>
+                <Button onClick={logoutHandler} className='cursor-pointer hidden md:block'>Logout</Button>
               </div> : <div className='ml-7 md:flex gap-2'>
                 <Link to={"/login"} ><Button className='cursor-pointer'>Login</Button></Link>
                 <Link className='hidden md:block' to={"/signup"}>< Button className='cursor-pointer'>Signup</Button></Link>
               </div>
             }
-
           </div>
+          {
+
+            openNav ? <HiMenuAlt3 onClick={toggleNav} className='w-7 h-7 md:hidden cursor-pointer' /> : <HiMenuAlt1 onClick={toggleNav} className='w-7 h-7 md:hidden cursor-pointer' />
+          }
         </nav>
+
+        <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav} logoutHandler={logoutHandler} />
+
       </div>
     </div>
   )
