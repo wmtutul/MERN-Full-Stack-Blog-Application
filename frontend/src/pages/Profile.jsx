@@ -21,6 +21,7 @@ import { useState } from "react";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
 import { toast } from "sonner";
+import TotalProperty from "@/components/TotalProperty";
 
 
 
@@ -96,7 +97,7 @@ const Profile = () => {
 
 
   return (
-    <div className='pt-20 md:ml-[320px] md:h-screen'>
+    <div className='pt-20 md:ml-[320px] min-h-screen bg-gray-900'>
       <div className='max-w-6xl mx-auto mt-8 '>
         <Card className=" flex md:flex-row flex-col gap-10 p-6 md:p-10 dark:bg-gray-800 mx-4 md:mx-0">
           {/* image section */}
@@ -124,7 +125,7 @@ const Profile = () => {
             <Dialog open={open} onOpenChange={setOpen}>
               <form>
                 <DialogTrigger asChild>
-                  <Button className="cursor-pointer" onClick={()=>setOpen(true)}>Edit Profile</Button>
+                  <Button className="cursor-pointer" onClick={() => setOpen(true)}>Edit Profile</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
@@ -238,6 +239,8 @@ const Profile = () => {
           </div>
         </Card>
       </div>
+
+      <TotalProperty />
 
     </div>
   )

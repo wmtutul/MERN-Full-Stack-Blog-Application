@@ -17,9 +17,7 @@ npm i cloudinary
 npm i datauri
 npm i multer
 
-Time: 2:04:00 / 4:35:28 4th video  Running--
-
-
+Time: 3:18:00 / 4:35:28 4th video  Running-- 
 
 
 
